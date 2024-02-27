@@ -27,4 +27,5 @@ jobs:
     
     - name: Unit Testing
       run: |
-        python3 ./ciphers_project/manage.py test
+        cd ciphers_project
+        python3 manage.py test
