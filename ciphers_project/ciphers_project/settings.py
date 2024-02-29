@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-wm+*-odc==@n-p#v^loas7ebn)gs=18gxn&a&&(nz-r4nw^9!u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', '0.0.0.0', 'https://ciphers-service-hbahramian.onrender.com']
 
 
 # Application definition
