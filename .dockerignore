@@ -1,0 +1,4 @@
+.gitignore
+.virtual-environment/
+ciphers_project/db.sqlite3
+*/.DS_Store
