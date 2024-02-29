@@ -4,6 +4,8 @@ db.sqlite3
 .DS_Store
 .env
 test.sh
+*/__pycache__
+*/*/__pycache__
 
 
 
