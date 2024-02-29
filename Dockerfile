@@ -16,4 +16,6 @@ COPY ./ciphers_project ciphers_project/
 
 COPY ./entrypoint.sh .
 
+RUN chmod +x entrypoint.sh
+
 ENTRYPOINT [ "./entrypoint.sh" ]
