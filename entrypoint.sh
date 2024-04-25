@@ -1,4 +1,3 @@
-@@ -1,9 +0,0 @@
 #!/bin/ash
 
 echo "Apply migrations"
