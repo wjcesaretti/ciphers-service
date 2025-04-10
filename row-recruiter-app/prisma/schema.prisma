@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - base model for authentication
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  role          UserRole
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  athlete       Athlete?
+  coach         Coach?
+  parent        Parent?
+}
+
+enum UserRole {
+  ATHLETE
+  COACH
+  PARENT
+  ADMIN
+}
+
+// Athlete profile
+model Athlete {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id])
+  firstName       String
+  lastName        String
+  dateOfBirth     DateTime
+  graduationYear  Int
+  height          Float     // in cm
+  weight          Float     // in kg
+  erg2k          Float?    // in seconds
+  erg6k          Float?    // in seconds
+  side           Side?     // Port/Starboard preference
+  experience      Int       // Years of rowing experience
+  achievements    Achievement[]
+  schoolInterests SchoolInterest[]
+  videos          Video[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// Coach profile
+model Coach {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id])
+  firstName     String
+  lastName      String
+  schoolId      String
+  school        School    @relation(fields: [schoolId], references: [id])
+  title         String
+  verified      Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// Parent profile
+model Parent {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id])
+  firstName     String
+  lastName      String
+  subscription  Subscription?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// School information
+model School {
+  id            String    @id @default(cuid())
+  name          String
+  division      Division
+  conference    String?
+  location      String
+  website       String?
+  coaches       Coach[]
+  interests     SchoolInterest[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// Athlete achievements
+model Achievement {
+  id          String    @id @default(cuid())
+  athleteId   String
+  athlete     Athlete   @relation(fields: [athleteId], references: [id])
+  title       String
+  description String?
+  date        DateTime
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// School interests/applications
+model SchoolInterest {
+  id          String    @id @default(cuid())
+  athleteId   String
+  athlete     Athlete   @relation(fields: [athleteId], references: [id])
+  schoolId    String
+  school      School    @relation(fields: [schoolId], references: [id])
+  status      InterestStatus
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Video uploads
+model Video {
+  id          String    @id @default(cuid())
+  athleteId   String
+  athlete     Athlete   @relation(fields: [athleteId], references: [id])
+  title       String
+  url         String
+  type        VideoType
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Subscription for premium features
+model Subscription {
+  id            String    @id @default(cuid())
+  parentId      String    @unique
+  parent        Parent    @relation(fields: [parentId], references: [id])
+  plan          PlanType
+  status        SubscriptionStatus
+  startDate     DateTime  @default(now())
+  endDate       DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum Side {
+  PORT
+  STARBOARD
+  BOTH
+}
+
+enum Division {
+  D1
+  D2
+  D3
+  CLUB
+}
+
+enum InterestStatus {
+  INTERESTED
+  APPLIED
+  CONTACTED
+  INTERVIEWING
+  ACCEPTED
+  REJECTED
+  COMMITTED
+}
+
+enum VideoType {
+  ERG
+  RACING
+  PRACTICE
+  OTHER
+}
+
+enum PlanType {
+  FREE
+  BASIC
+  PREMIUM
+  ELITE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PENDING
+} 
