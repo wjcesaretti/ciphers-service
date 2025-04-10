@@ -29,7 +29,7 @@ export const AuroraBackground = ({
           } as React.CSSProperties}>
           <div
             className={cn(
-              `pointer-events-none absolute inset-0 opacity-30 blur-[2px] will-change-transform`,
+              `pointer-events-none absolute inset-0 opacity-30 blur-[2px] will-change-transform z-0`,
               `[background-image:var(--wave-1)] [background-size:200%_200%] animate-wave-1`,
               `after:absolute after:inset-0 after:opacity-20 after:blur-[3px] after:will-change-transform`,
               `after:[background-image:var(--wave-2)] after:[background-size:200%_200%] after:animate-wave-2`,
@@ -40,7 +40,9 @@ export const AuroraBackground = ({
             )}
           />
         </div>
-        {children}
+        <div className="relative z-10 w-full h-full">
+          {children}
+        </div>
       </div>
     </main>
   );

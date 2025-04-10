@@ -25,13 +25,19 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="flex space-x-4">
-              <Link href="/login" passHref>
-                <Button className="bg-transparent border border-white text-white hover:bg-white/10">
+              <Link 
+                href="/login"
+                className="bg-transparent border border-white text-white hover:bg-white/10"
+              >
+                <Button>
                   Log In
                 </Button>
               </Link>
-              <Link href="/register" passHref>
-                <Button className="bg-transparent border border-white text-white hover:bg-white/10">
+              <Link 
+                href="/register"
+                className="bg-white text-blue-900 hover:bg-gray-100"
+              >
+                <Button>
                   Register
                 </Button>
               </Link>
@@ -50,12 +56,18 @@ export default function LandingPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-              <Link href="/register?role=ATHLETE" passHref>
+              <Link 
+                href="/register?role=ATHLETE"
+                className="w-full sm:w-auto"
+              >
                 <Button className="w-full sm:w-auto bg-white text-blue-900 hover:bg-gray-100 text-lg px-8 py-4">
                   I&apos;m a High School Rower
                 </Button>
               </Link>
-              <Link href="/register?role=COACH" passHref>
+              <Link 
+                href="/register?role=COACH"
+                className="w-full sm:w-auto"
+              >
                 <Button className="w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 text-lg px-8 py-4">
                   I&apos;m a College Coach
                 </Button>

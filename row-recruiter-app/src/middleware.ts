@@ -9,23 +9,28 @@ export async function middleware(req: NextRequest) {
   // Refresh session if expired - required for Server Components
   await supabase.auth.getSession();
 
-  // Check if the user is trying to access a protected route
-  const isProtectedRoute = req.nextUrl.pathname.startsWith('/dashboard');
-  const isAuthRoute = req.nextUrl.pathname.startsWith('/auth');
-
-  // Get the user's session
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  // If the user is not logged in and trying to access a protected route, redirect to login
+  // Check if the user is trying to access a protected route
+  const isProtectedRoute = req.nextUrl.pathname.startsWith('/dashboard') || 
+                          req.nextUrl.pathname.startsWith('/profile') ||
+                          req.nextUrl.pathname.startsWith('/explore');
+  
+  // Check if the user is trying to access an auth route
+  const isAuthRoute = req.nextUrl.pathname === '/login' || 
+                     req.nextUrl.pathname === '/register' ||
+                     req.nextUrl.pathname === '/forgot-password';
+
+  // If trying to access a protected route without being logged in
   if (isProtectedRoute && !session) {
-    const redirectUrl = new URL('/auth/login', req.url);
+    const redirectUrl = new URL('/login', req.url);
     redirectUrl.searchParams.set('redirectTo', req.nextUrl.pathname);
     return NextResponse.redirect(redirectUrl);
   }
 
-  // If the user is logged in and trying to access an auth route, redirect to dashboard
+  // If trying to access auth routes while being logged in
   if (isAuthRoute && session) {
     return NextResponse.redirect(new URL('/dashboard', req.url));
   }
