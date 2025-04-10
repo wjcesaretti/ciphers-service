@@ -9,7 +9,13 @@ interface ButtonProps extends Omit<HTMLMotionProps<"button">, "className"> {
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className = "", children, ...props }, ref) => {
+  ({ className = "", children, onClick, ...props }, ref) => {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (onClick) {
+        onClick(e);
+      }
+    };
+
     return (
       <motion.button
         ref={ref}
@@ -20,6 +26,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           "bg-white text-blue-900 font-bold px-4 py-2 text-base md:px-6 md:py-3 md:text-lg rounded hover:bg-gray-100 transition",
           className
         )}
+        onClick={handleClick}
         {...props}
       >
         {children}

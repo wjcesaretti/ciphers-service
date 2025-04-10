@@ -61,7 +61,7 @@ export default function RegisterPage() {
       
       // Redirect to login after a short delay
       setTimeout(() => {
-        router.push('/auth/login');
+        router.push('/login');
       }, 3000);
     } catch (error) {
       console.error('Registration error:', error);
@@ -80,7 +80,7 @@ export default function RegisterPage() {
             </h2>
             <p className="mt-2 text-sm text-blue-200">
               Already have an account?{' '}
-              <Link href="/auth/login" className="font-medium text-blue-300 hover:text-blue-200">
+              <Link href="/login" className="font-medium text-blue-300 hover:text-blue-200">
                 Sign in
               </Link>
             </p>

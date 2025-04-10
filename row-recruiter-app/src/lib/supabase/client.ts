@@ -29,12 +29,19 @@ export const getCurrentUser = async () => {
 
 // Helper function to sign out
 export const signOut = async () => {
-  const { error } = await supabase.auth.signOut();
-  
-  if (error) {
-    console.error('Error signing out:', error.message);
+  try {
+    console.log('Supabase client: Signing out...');
+    const { error } = await supabase.auth.signOut();
+    
+    if (error) {
+      console.error('Error signing out:', error.message);
+      return false;
+    }
+    
+    console.log('Supabase client: Signed out successfully');
+    return true;
+  } catch (error) {
+    console.error('Unexpected error during sign out:', error);
     return false;
   }
-  
-  return true;
 }; 

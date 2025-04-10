@@ -50,7 +50,7 @@ export default function LoginPage() {
             </h2>
             <p className="mt-2 text-sm text-blue-200">
               Don&apos;t have an account?{' '}
-              <Link href="/auth/register" className="font-medium text-blue-300 hover:text-blue-200">
+              <Link href="/register" className="font-medium text-blue-300 hover:text-blue-200">
                 Sign up
               </Link>
             </p>
