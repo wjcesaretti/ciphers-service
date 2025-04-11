@@ -33,12 +33,12 @@ export default function LoginPage() {
       }
       
       console.log('Sign in successful, redirecting...');
-      // Redirect to the test page instead of dashboard
-      console.log('Redirecting to: /test');
+      // Redirect to the dashboard now that we know authentication works
+      console.log('Redirecting to: /dashboard');
       
       // Use a direct link instead of window.location
       const link = document.createElement('a');
-      link.href = '/test';
+      link.href = '/dashboard';
       link.click();
     } catch (error) {
       console.error('Unexpected login error:', error);
