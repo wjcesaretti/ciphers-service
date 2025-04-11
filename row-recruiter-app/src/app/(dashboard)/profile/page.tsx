@@ -33,7 +33,7 @@ interface ProfileFormData {
 }
 
 export default function ProfilePage() {
-  const { user, loading, signOut } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
   const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [formData, setFormData] = useState<ProfileFormData>({

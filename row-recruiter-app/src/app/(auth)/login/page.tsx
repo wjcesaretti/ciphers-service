@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/context/auth-context';
 import { Button } from '@/components/ui/button';
@@ -14,29 +13,38 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const { signIn } = useAuth();
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
+    console.log('Starting sign in process...');
 
     try {
+      console.log('Calling signIn with email:', email);
       const { error } = await signIn(email, password);
+      console.log('Sign in response:', error ? 'Error' : 'Success');
       
       if (error) {
+        console.error('Sign in error:', error.message);
         setError(error.message);
         setLoading(false);
         return;
       }
       
-      // Redirect to the intended page or dashboard
-      const redirectTo = searchParams.get('redirectTo') || '/dashboard';
-      router.push(redirectTo);
+      console.log('Sign in successful, redirecting...');
+      // Redirect to the test page instead of dashboard
+      console.log('Redirecting to: /test');
+      
+      // Use a direct link instead of window.location
+      const link = document.createElement('a');
+      link.href = '/test';
+      link.click();
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Unexpected login error:', error);
       setError('An unexpected error occurred');
+      setLoading(false);
+    } finally {
       setLoading(false);
     }
   };
